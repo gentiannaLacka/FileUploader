@@ -1,0 +1,12 @@
+<div class="container mt-5">
+    <div style="text-align: center;">
+        <h1>Upload a file</h1>
+        <p class="lead">Upload an inventory or a product!</p>
+            <div class="text-center">
+                <input type="file" #csvReader hidden name="Upload CSV" id="csvFileUpload" (change)="upload($event)" accept=".csv" />
+                <input type="file" #xmlReader hidden name="Upload XML" id="xmlFileUpload" (change)="upload($event)" accept=".xml" />
+                <button class="btn btn-primary btn-lg mr-2" (click)="csvReader.click()">Upload Inventory</button>
+                <button class="btn btn-info btn-lg" (click)="xmlReader.click()">Upload Product</button>
+            </div>
+    </div>
+</div>

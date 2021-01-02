@@ -29,5 +29,11 @@ namespace API.Controllers
         {
             return await _context.Products.FindAsync(id);
         }
+
+        [HttpPost]
+        public void UploadProduct(Product product)
+        {
+            _context.Products.Add(product);
+        }
     }
 }
