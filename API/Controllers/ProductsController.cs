@@ -2,7 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.DTOs;
 using API.Entities;
+using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,28 +15,29 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly DataContext _context;
-        public ProductsController(DataContext context)
+        private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
+
+        public ProductsController(IProductRepository productRepository, IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
+            _productRepository = productRepository;
         }
+
+        public IMapper Mapper { get; }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
-        {
-            return await _context.Products.FindAsync(id);
+            var products = await _productRepository.GetProductsAsync();
+            var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(products);
+            return new OkObjectResult(productsToReturn);
         }
 
         [HttpPost]
-        public void UploadProduct(Product product)
+        public void Update(Product product)
         {
-            _context.Products.Add(product);
+            _productRepository.Update(product);
         }
     }
 }

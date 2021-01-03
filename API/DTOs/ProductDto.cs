@@ -1,11 +1,11 @@
-
 using System;
 using System.Collections.Generic;
 
-namespace API.Entities
+namespace API.DTOs
 {
-    public class Product
+    public class ProductDto
     {
+
         public int Id { get; set; }
         public string Title { get; set; }
         public string BodyHtml { get; set; }
@@ -15,8 +15,7 @@ namespace API.Entities
         public string Handle { get; set; }
         public string PublishedScope { get; set; }
         public string Tags { get; set; }
-        public ICollection<Image> Image { get; set; }
+        public string ImageSrc { get; set; }
+        public ICollection<ImageDto> Image { get; set; }
     }
-
-
 }

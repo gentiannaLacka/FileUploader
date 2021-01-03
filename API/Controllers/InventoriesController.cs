@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.DTOs;
 using API.Entities;
+using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,22 +17,27 @@ namespace API.Controllers
 
     public class InventoriesController
     {
-        private readonly DataContext _context;
-        public InventoriesController(DataContext context)
+        private readonly IInventoryRepository _inventoryRepository;
+        private readonly IMapper _mapper;
+        public InventoriesController(IInventoryRepository inventoryRepository, IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
+            _inventoryRepository = inventoryRepository;
+
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Inventory>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<InventoryDto>>> GetInventories()
         {
-            return await _context.Inventories.ToListAsync();
+            var inventories = await _inventoryRepository.GetInventoriesAsync();
+            var inventoriesToReturn = _mapper.Map<IEnumerable<InventoryDto>>(inventories);
+            return new OkObjectResult(inventoriesToReturn);
         }
 
         [HttpPost]
-        public void UploadInventory(Inventory inventory)
+        public void Update(Inventory inventory)
         {
-            _context.Inventories.Add(inventory);
+            _inventoryRepository.Update(inventory);
         }
     }
 }
