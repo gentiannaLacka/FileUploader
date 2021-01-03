@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UploadService } from  '../_services/upload.service';
 import { Inventory } from '../_models/inventory';
 
@@ -10,15 +9,13 @@ import { Inventory } from '../_models/inventory';
 })
 export class HomeComponent implements OnInit {
   records = [];
-  baseUrl = "https://localhost:5001/api/";
+ 
+  constructor(private uploadService: UploadService){}
 
-  constructor(private http: HttpClient, private uploadService: UploadService){}
-
-  ngOnInit(){
-  } 
-
+  ngOnInit(){} 
 
    upload($event: any): void {  
+
     let files = $event.srcElement.files;  
   
     if (this.isValidCSVFile(files[0])) {  
