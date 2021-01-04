@@ -39,5 +39,11 @@ namespace API.Controllers
         {
             _inventoryRepository.Update(inventory);
         }
+
+        [HttpPost]
+        public void UploadInventory(Inventory inventory)
+        {
+            _inventoryRepository.Update(inventory);
+        }
     }
 }
