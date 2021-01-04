@@ -7,15 +7,16 @@ using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/inventories")]
 
-    public class InventoriesController
+    public class InventoriesController : ControllerBase
     {
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IMapper _mapper;
@@ -34,16 +35,11 @@ namespace API.Controllers
             return new OkObjectResult(inventoriesToReturn);
         }
 
-        [HttpPost]
-        public void Update(Inventory inventory)
-        {
-            _inventoryRepository.Update(inventory);
-        }
 
-        [HttpPost]
+        [HttpPost("uploadInventory")]
         public void UploadInventory(Inventory inventory)
         {
-            _inventoryRepository.Update(inventory);
+            _inventoryRepository.Upload(inventory);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace API.Data
             .ToListAsync();
         }
 
-        public void Update(Product product)
+        public void Upload(Product product)
         {
             _context.Entry(product).State = EntityState.Modified;
         }

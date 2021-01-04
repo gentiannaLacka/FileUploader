@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
         let csvData = reader.result;  
         let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);  
         let records=this.getDataRecordsArrayFromCSVFile(csvRecordsArray);       
-        this.uploadCSVFile(records);  
+        //this.uploadCSVFile(records);  
       };   
       reader.onerror = function () {  
         console.log('error is occured while reading file!');  
@@ -45,8 +45,7 @@ export class HomeComponent implements OnInit {
         let result = convert.xml2json(xml, {compact: true, spaces: 4}); 
         let obj=JSON.parse(result);
         let records= this.getDataRecordsArrayFromXMLFile(obj.products.product);
-        //this.uploadXMLFile(records);
-        console.log(obj.products.product);
+        this.uploadXMLFile(records);
       };  
 
       reader.onerror = function () {  
@@ -57,26 +56,12 @@ export class HomeComponent implements OnInit {
 
   getDataRecordsArrayFromXMLFile(productsArray: any) {   
     let productArr= [];
+    let imageArr= [];
     for (let i = 1; i < productsArray.length; i++) {  
         let xmlRecord: Product = new Product();
         let image: Image = new Image();
 
-         if(productsArray[i].image["alt"]){
-          image.alt=productsArray[i].image["alt"]["_text"];
-        }
-         if(productsArray[i].image["position"]){
-          image.imageSrc=productsArray[i].image["position"]["_text"];
-        }
-          image.id=productsArray[i].image["id"]["_text"];
-          image.imageSrc=productsArray[i].image["product-id"]["_text"];
-          image.createdAt=productsArray[i].image["created-at"]["_text"];
-          image.updatedAt=productsArray[i].image["updated-at"]["_text"];
-          image.width=productsArray[i].image["width"]["_text"];
-          image.height=productsArray[i].image["height"]["_text"];
-          image.imageSrc=productsArray[i].image["src"]["_text"];
-
-        xmlRecord.imageSrc= image.imageSrc;
-        xmlRecord.images.push(image);
+       
         xmlRecord.id = productsArray[i]["id"]["_text"];
         xmlRecord.title=productsArray[i]["title"]["_text"];
         xmlRecord.bodyHtml=productsArray[i]["body-html"]["_text"];
@@ -86,8 +71,29 @@ export class HomeComponent implements OnInit {
         xmlRecord.handle=productsArray[i]["handle"]["_text"];
         xmlRecord.publishedScope=productsArray[i]["published-scope"]["_text"];
         xmlRecord.tags=productsArray[i]["tags"]["_text"];
+
+        if(productsArray[i].image["alt"]!=undefined){
+          debugger;
+          image.alt=productsArray[i].image["alt"]["_text"];
+        }
+         if(productsArray[i].image["position"]!=undefined){
+           debugger;
+          image.imageSrc=productsArray[i].image["position"]["_text"];
+        }
+        debugger;
+          image.id=productsArray[i].image["id"]["_text"];
+          image.imageSrc=productsArray[i].image["product-id"]["_text"];
+          image.createdAt=productsArray[i].image["created-at"]["_text"];
+          image.updatedAt=productsArray[i].image["updated-at"]["_text"];
+          image.width=productsArray[i].image["width"]["_text"];
+          image.height=productsArray[i].image["height"]["_text"];
+          image.imageSrc=productsArray[i].image["src"]["_text"];
+
+        imageArr.push(image);
+        xmlRecord.images= imageArr;
+        xmlRecord.imageSrc= image.imageSrc;
+
         productArr.push(xmlRecord);
-        console.log(productArr);
     }  
     return productArr;  
   }  
@@ -102,12 +108,13 @@ export class HomeComponent implements OnInit {
         csvRecord.vendor = currentInventory[1].trim().replace(/"/g,"");  
         csvRecord.amount = currentInventory[2].trim().replace(/"/g,"");  
         inventoryArr.push(csvRecord);
+        this.uploadCSVFile(csvRecord);
     }  
     return inventoryArr;  
   }  
 
-   uploadCSVFile(inventories:any){
-     this.uploadService.uploadInventory(inventories).subscribe(
+   uploadCSVFile(inventory:any){
+     this.uploadService.uploadInventory(inventory).subscribe(
      response=>{
        console.log(response);
      }, error=>{

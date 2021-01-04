@@ -24,7 +24,7 @@ namespace API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public void Update(Inventory inventory)
+        public void Upload(Inventory inventory)
         {
             _context.Entry(inventory).State = EntityState.Modified;
         }

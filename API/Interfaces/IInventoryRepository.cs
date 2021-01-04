@@ -6,7 +6,7 @@ namespace API.Interfaces
 {
     public interface IInventoryRepository
     {
-        void Update(Inventory inventory);
+        void Upload(Inventory inventory);
         Task<IEnumerable<Inventory>> GetInventoriesAsync();
         Task<bool> SaveAllAsync();
     }

@@ -6,6 +6,7 @@ using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,8 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [EnableCors]
+    [Route("api/products")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -35,17 +37,10 @@ namespace API.Controllers
             return new OkObjectResult(productsToReturn);
         }
 
-        [HttpPost]
-        public void Update(Product product)
-        {
-            _productRepository.Update(product);
-
-        }
-
         [HttpPost("uploadProduct")]
-        public void UploadProduct(IFormFile file)
+        public void UploadProduct(Product product)
         {
-
+            _productRepository.Upload(product);
         }
     }
 }
