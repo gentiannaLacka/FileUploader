@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
         let csvData = reader.result;  
         let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);  
         let records=this.getDataRecordsArrayFromCSVFile(csvRecordsArray);       
-        //this.uploadCSVFile(records);  
+        this.uploadCSVFile(records);  
       };   
       reader.onerror = function () {  
         console.log('error is occured while reading file!');  
@@ -108,7 +108,6 @@ export class HomeComponent implements OnInit {
         csvRecord.vendor = currentInventory[1].trim().replace(/"/g,"");  
         csvRecord.amount = currentInventory[2].trim().replace(/"/g,"");  
         inventoryArr.push(csvRecord);
-        this.uploadCSVFile(csvRecord);
     }  
     return inventoryArr;  
   }  
