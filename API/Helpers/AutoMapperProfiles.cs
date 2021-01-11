@@ -11,10 +11,7 @@ namespace API.Helpers
         {
             CreateMap<Inventory, InventoryDto>();
             CreateMap<Image, ImageDto>();
-            CreateMap<Product, ProductDto>().ForMember(
-                dest => dest.ImageSrc,
-                opt => opt.MapFrom(src => src.Image.FirstOrDefault().ImageSrc)
-            );
+            CreateMap<Product, ProductDto>();
         }
     }
 }

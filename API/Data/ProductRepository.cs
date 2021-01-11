@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Entities;
@@ -21,14 +22,36 @@ namespace API.Data
             .ToListAsync();
         }
 
-        public void Upload(Product product)
+        public async Task<IEnumerable<Product>> Upload(IEnumerable<Product> products)
         {
-            _context.Entry(product).State = EntityState.Modified;
+            foreach (var product in products)
+            {
+                if (!(await this.ProductExists(product.Id)))
+                {
+                    _context.Products.Add(product);
+                }
+                else
+                {
+                    _context.Products.Update(product);
+                }
+
+
+            }
+
+            await _context.SaveChangesAsync();
+
+            return await _context.Products
+            .Include(p => p.Image)
+            .ToListAsync();
         }
 
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;
+        }
+        private async Task<bool> ProductExists(Int64 productId)
+        {
+            return await _context.Products.AnyAsync(x => x.Id == productId);
         }
     }
 }

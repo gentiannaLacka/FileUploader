@@ -5,7 +5,7 @@ namespace API.DTOs
 {
     public class ProductDto
     {
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
         public string Title { get; set; }
         public string BodyHtml { get; set; }
         public string Vendor { get; set; }
@@ -14,7 +14,7 @@ namespace API.DTOs
         public string Handle { get; set; }
         public string PublishedScope { get; set; }
         public string Tags { get; set; }
-        public string ImageSrc { get; set; }
-        public ICollection<ImageDto> Image { get; set; }
+        //public string ImageSrc { get; set; }
+        public ImageDto Image { get; set; }
     }
 }

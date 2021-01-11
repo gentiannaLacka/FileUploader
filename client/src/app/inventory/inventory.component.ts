@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UploadService } from '../_services/upload.service';
 
 @Component({
   selector: 'app-inventory',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent implements OnInit {
-
-  constructor() { }
+  inventories= [];
+  constructor(private uploadService: UploadService) { }
 
   ngOnInit(): void {
+    this.loadInventories();
+  }
+  loadInventories(){
+    this.uploadService.getInventories().subscribe(
+      response=>{
+        this.inventories.push(response);
+      });   
   }
 
 }

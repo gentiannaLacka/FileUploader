@@ -1,12 +1,11 @@
 export class Image{
-    id: number;
-    imageSrc: string;
+    id: Number;
+    productId:Number;
+    position?: number;
     createdAt:  Date;
     updatedAt: Date;
-    imageAlt:boolean;
+    imageAlt?:string;
     width:number;
-    height:number;
-    productId:number;
-    alt?: string;
-    position?: number;
+    height:number;  
+    imageSrc: string;
 }

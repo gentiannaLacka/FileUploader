@@ -1,5 +1,9 @@
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace API.Entities
 {
+    [Table("Inventories")]
     public class Inventory
     {
         public int Id { get; set; }

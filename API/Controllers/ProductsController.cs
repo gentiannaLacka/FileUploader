@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace API.Controllers
 
         public IMapper Mapper { get; }
 
-        [HttpGet]
+        [HttpGet("getProducts")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
             var products = await _productRepository.GetProductsAsync();
@@ -38,9 +39,13 @@ namespace API.Controllers
         }
 
         [HttpPost("uploadProduct")]
-        public void UploadProduct(Product product)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> UploadProduct(IEnumerable<Product> products)
         {
-            _productRepository.Upload(product);
+
+            var productList = await _productRepository.Upload(products);
+            var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(productList);
+            return new OkObjectResult(productsToReturn);
         }
+      
     }
 }

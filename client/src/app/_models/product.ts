@@ -1,7 +1,7 @@
 import { Image } from './image';
 
 export class Product{
-         id:number;
+         id: Number;
          title: string;
          bodyHtml: string;
          vendor: string;
@@ -10,6 +10,7 @@ export class Product{
          handle: string;
          publishedScope : string;
          tags: string;
-         imageSrc: string;
-         images: Image[];
+         //imageSrc: string;
+         image: Image;
 }
+      

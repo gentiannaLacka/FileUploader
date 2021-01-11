@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -24,9 +25,16 @@ namespace API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public void Upload(Inventory inventory)
+        public async Task<IEnumerable<Inventory>> Upload(IEnumerable<Inventory> inventories)
         {
-            _context.Entry(inventory).State = EntityState.Modified;
+            foreach (var inventory in inventories)
+            {
+                _context.Inventories.Add(inventory);
+
+            }
+            await _context.SaveChangesAsync();
+
+            return await _context.Inventories.ToListAsync();
         }
     }
 }

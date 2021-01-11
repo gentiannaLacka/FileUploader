@@ -6,7 +6,14 @@
                 <input type="file" #csvReader hidden name="Upload CSV" id="csvFileUpload" (change)="uploadInventory($event)" accept=".csv" />
                 <input type="file" #xmlReader hidden name="Upload XML" id="xmlFileUpload" (change)="uploadProduct($event)" accept=".xml" />
                 <button class="btn btn-primary btn-lg mr-2" (click)="csvReader.click()">Upload Inventory</button>
-                <button class="btn btn-info btn-lg" (click)="xmlReader.click()">Upload Product</button>
+                <button class="btn btn-info btn-lg" (click)="xmlReader.click()">Upload Product</button>                               
             </div>
-    </div>
+            
+            <div>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let record of records">{{record.name}}</li>
+                </ul>
+            </div>
+              
+    </div>  
 </div>

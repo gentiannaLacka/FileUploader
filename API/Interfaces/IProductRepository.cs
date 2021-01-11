@@ -6,7 +6,7 @@ namespace API.Interfaces
 {
     public interface IProductRepository
     {
-        void Upload(Product product);
+        Task<IEnumerable<Product>> Upload(IEnumerable<Product> inventories);
         Task<IEnumerable<Product>> GetProductsAsync();
         Task<bool> SaveAllAsync();
     }

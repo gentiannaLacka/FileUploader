@@ -27,7 +27,7 @@ namespace API.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("getInventories")]
         public async Task<ActionResult<IEnumerable<InventoryDto>>> GetInventories()
         {
             var inventories = await _inventoryRepository.GetInventoriesAsync();
@@ -37,9 +37,11 @@ namespace API.Controllers
 
 
         [HttpPost("uploadInventory")]
-        public void UploadInventory(Inventory inventory)
+        public async Task<ActionResult<IEnumerable<InventoryDto>>> UploadInventory(IEnumerable<Inventory> inventories)
         {
-            _inventoryRepository.Upload(inventory);
+            var inventoryList = await _inventoryRepository.Upload(inventories);
+            var inventoriesToReturn = _mapper.Map<IEnumerable<InventoryDto>>(inventoryList);
+            return new OkObjectResult(inventoriesToReturn);
         }
     }
 }

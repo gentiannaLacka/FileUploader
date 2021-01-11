@@ -21,23 +21,27 @@ export class UploadService {
 
   constructor(private http: HttpClient) { }
 
-  uploadInventory(model:any){
-    return this.http.post(this.baseUrl + "inventories/uploadInventory", model).pipe(map(
-      (inventory: Inventory)=>{
-        if(inventory){
-          this.currentInventorySource.next(inventory);
-        }
-      }
-    ));
+  uploadInventory(model:Inventory[]){
+    return this.http.post(this.baseUrl + "inventories/uploadInventory", model);
   }
 
-  uploadProduct(model:any){
-    return this.http.post(this.baseUrl + "products/uploadProduct", model).pipe(map(
-      (product: Product)=>{
-        if(product){
-          this.currentProductSource.next(product);
-        }
-      }
-    ));
+   uploadProduct(model:Product[]){
+    return this.http.post(this.baseUrl + "products/uploadProduct", model);
   }
+
+  getProducts(){
+    return this.http.get(this.baseUrl + "products/getProducts");
+  }
+
+   getInventories(){
+    return this.http.get(this.baseUrl + "inventories/getInventories");
+  }
+  // .pipe(map(
+  //     (product: Product)=>{
+  //       if(product){
+  //         this.currentProductSource.next(product);
+  //       }
+  //     }
+  //   ))
+
 }
