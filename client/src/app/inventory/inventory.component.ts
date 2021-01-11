@@ -7,7 +7,7 @@ import { UploadService } from '../_services/upload.service';
   styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent implements OnInit {
-  inventories= [];
+  inventories;
   constructor(private uploadService: UploadService) { }
 
   ngOnInit(): void {
@@ -16,7 +16,7 @@ export class InventoryComponent implements OnInit {
   loadInventories(){
     this.uploadService.getInventories().subscribe(
       response=>{
-        this.inventories.push(response);
+        this.inventories=response;
       });   
   }
 

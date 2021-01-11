@@ -8,17 +8,19 @@ import { UploadService } from '../_services/upload.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
+
 export class ProductComponent implements OnInit {
-products=[];
+  products;
   constructor(private uploadService: UploadService ) { }
 
   ngOnInit(): void {
     this.loadProducts();
   }
-loadProducts(){
+
+  loadProducts(){
   this.uploadService.getProducts().subscribe(
       response=>{
-        this.products.push(response);
+        this.products=response;
       }); 
 }
 }

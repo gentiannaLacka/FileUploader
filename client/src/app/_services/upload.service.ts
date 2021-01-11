@@ -36,12 +36,5 @@ export class UploadService {
    getInventories(){
     return this.http.get(this.baseUrl + "inventories/getInventories");
   }
-  // .pipe(map(
-  //     (product: Product)=>{
-  //       if(product){
-  //         this.currentProductSource.next(product);
-  //       }
-  //     }
-  //   ))
 
 }

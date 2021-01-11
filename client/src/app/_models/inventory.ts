@@ -1,5 +1,5 @@
 export class Inventory{
     handle: string;
-    vendor:string;
+    location:string;
     amount: Number;
 }

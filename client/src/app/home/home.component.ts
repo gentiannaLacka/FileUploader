@@ -11,8 +11,8 @@ import { Image } from '../_models/image';
 })
 export class HomeComponent implements OnInit {
   records = [];
-  inventories = [];
-  products = [];
+  inventories;
+  products;
  
   constructor(private uploadService: UploadService){}
 
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
         let csvRecord: Inventory = new Inventory();   
         let currentInventory = (csvRecordsArray[i]).split(';');         
         csvRecord.handle = currentInventory[0].trim().replace(/"/g,"");  
-        csvRecord.vendor = currentInventory[1].trim().replace(/"/g,"");  
+        csvRecord.location = currentInventory[1].trim().replace(/"/g,"");  
         csvRecord.amount = currentInventory[2].trim().replace(/"/g,"");  
        
         inventoryArr.push(csvRecord);
@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit {
    uploadCSVFile(inventories:Inventory[]){
      this.uploadService.uploadInventory(inventories).subscribe(
      response=>{
-       this.inventories.push(response) ;
+       this.inventories=response;
      }, error=>{
        console.log(error);
      });
@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit {
      uploadXMLFile(products:Product[]){
      this.uploadService.uploadProduct(products).subscribe(
      product=>{
-       this.products.push(product)
+       this.products=product;
      }, error=>{
        console.log(error);
      });
